@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 // import instance from '../api/apiConfig';
+import BookCard from '../components/BookCard';
 
 const HomePage = () => {
     const [ books, setBooks ] = React.useState([]);
@@ -9,6 +10,12 @@ const HomePage = () => {
     const handleChange = e => {
         setSearchTerm(e.target.value);
     };
+
+    // const handlesubmit = e => {
+    //     e.preventDefault();
+    //     console.log(handleSubmit);
+
+    // };
     
     useEffect(() => {
         const fetchData = async () => {
@@ -33,39 +40,14 @@ const HomePage = () => {
       <div className='container my-4'>
           
         <h1 style={{textShadow: '1px 1px white'}}>Game of Thrones Book Series list!!</h1>
+        <button 
+        className='btn btn-block btn-dark' 
+        // onClick={handleSubmit}
+        >
+        Search
+        </button>
 
-        <input
-         type='text'
-         className='form-control my-2'
-         id='book-search'
-         placeholder='Search for a certain book of the series...'
-         value={searchTerm}
-         onChange={handleChange}
-        />
-
-        <hr/>
-      <div className='row col-12'>
-        {books &&
-          books.map((book, i) => {
-            const cleanedDate = new Date(book.released).toDateString();
-            const authors = book.authors.join(", ");
-
-            return (
-              <div className='card col-2' key={i}>
-
-                <h2>Book Name: {book.name}</h2>
-                <h3>Book # {i + 1}</h3>
-
-                <div className="details">
-                  <p>Authors: {authors}</p>
-                  <p>Pages: {book.numberOfPages} pages</p>
-                  <p>Country: {book.country}</p>
-                  <p>Date: {cleanedDate}</p>
-                </div>
-              </div>
-            );
-          })}
-      </div>
+       <BookCard books={books} searchTerm={searchTerm} handleChange={handleChange}  />
 
 
     </div>
